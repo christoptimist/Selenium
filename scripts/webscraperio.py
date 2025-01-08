@@ -34,27 +34,6 @@ driver = webdriver.Chrome(options=option,service=service)
 
 driver.get('https://webscraper.io/test-sites')
 
-site_heading_element = WebDriverWait(driver,10).until(
-    EC.presence_of_all_elements_located((By.XPATH,'//*[@class="site-heading"]'))
-)
+time.sleep(30)
 
-for product in site_heading_element:
-    product_links = WebDriverWait(driver,10).until(
-        EC.presence_of_all_elements_located((By.PARTIAL_LINK_TEXT,product.text))
-    )
-
-    for product_link in product_links:
-        time.sleep(random.uniform(1,3))
-        product_link.click()
-
-        height = 0
-
-        while True:
-            if (height <= 30):
-                height += 1
-                action = ActionChains(driver)
-                action.scroll_by_amount(0,height).perform()
-                time.sleep(random.uniform(0.00001,0.0001))
-                
-    time.sleep(random.uniform(2,5))
 driver.quit()
