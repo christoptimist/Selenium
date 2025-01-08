@@ -33,7 +33,4 @@ option.add_argument('--incognito')
 driver = webdriver.Chrome(options=option,service=service)
 
 driver.get('https://webscraper.io/test-sites')
-
-time.sleep(30)
-
 driver.quit()
