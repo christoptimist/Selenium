@@ -1,9 +1,9 @@
 from selenium import webdriver
 from selenium_stealth import stealth
-from web_scrape.classes.chrome_options import ChromeOptions
-from web_scrape.classes.stealth_configuration import StealthConfiguration
-from web_scrape.interfaces.i_web_driver import IWebDriver
-from web_scrape.interfaces.i_web_driver_factory import IWebDriverFactory
+from classes.chrome_options import ChromeOptions
+from classes.stealth_configuration import StealthConfiguration
+from interfaces.i_web_driver import IWebDriver
+from interfaces.i_web_driver_factory import IWebDriverFactory
 
 class ChromeWebDriverFactory(IWebDriverFactory):
     def __init__(self,options: ChromeOptions, stealth_config: StealthConfiguration):

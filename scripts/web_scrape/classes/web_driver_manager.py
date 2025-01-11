@@ -1,5 +1,5 @@
-from web_scrape.interfaces.i_web_driver import IWebDriver
-from web_scrape.interfaces.i_web_driver_factory import IWebDriverFactory
+from interfaces.i_web_driver import IWebDriver
+from interfaces.i_web_driver_factory import IWebDriverFactory
 
 class WebDriverManager:
     def __init__(self, driver_factory: IWebDriverFactory):

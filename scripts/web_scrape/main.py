@@ -1,9 +1,9 @@
-# Usage
-from web_scrape.classes.chrome_options import ChromeOptions
-from web_scrape.classes.chrome_web_driver_factory import ChromeWebDriverFactory
-from web_scrape.classes.stealth_configuration import StealthConfiguration
-from web_scrape.classes.web_driver_manager import WebDriverManager
-from web_scrape.classes.user_agents import UserAgents
+from classes.chrome_options import ChromeOptions
+from classes.chrome_web_driver_factory import ChromeWebDriverFactory
+from classes.stealth_configuration import StealthConfiguration
+from classes.user_agents import UserAgents
+from classes.web_driver_manager import WebDriverManager
+
 
 user_agent = UserAgents()
 

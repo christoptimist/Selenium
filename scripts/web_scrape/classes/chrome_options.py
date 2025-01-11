@@ -1,6 +1,6 @@
 from selenium import webdriver
-from web_scrape.interfaces.i_user_agent_options import IUserAgentOptions
-from web_scrape.interfaces.i_window_options import IWindowOptions
+from interfaces.i_user_agent_options import IUserAgentOptions
+from interfaces.i_window_options import IWindowOptions
 
 class ChromeOptions(IWindowOptions, IUserAgentOptions):
     def __init__(self):

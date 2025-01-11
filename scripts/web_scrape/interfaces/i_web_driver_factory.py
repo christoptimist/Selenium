@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from web_scrape.interfaces.i_web_driver import IWebDriver
+from interfaces.i_web_driver import IWebDriver
 
 class IWebDriverFactory(ABC):
     @abstractmethod
