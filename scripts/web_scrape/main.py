@@ -26,7 +26,7 @@ driver.get(website)
 
 site_key = driver.find_element('xpath', '//*[@id="recaptcha-demo"]').get_attribute('data-sitekey')
 textarea_element = driver.find_element('xpath', '//*[@id="g-recaptcha-response"]')
-token = captcha_manager.get_token('7471a4713ed1488cac8491e3c72f4bf3', site_key,website)
+token = captcha_manager.get_token('api_key', site_key,website)
 driver.execute_script("arguments[0].style.display = 'block';", textarea_element)
 textarea_element.send_keys(token)
 button_element = driver.find_element('xpath', '//*[@id="recaptcha-demo-submit"]')
