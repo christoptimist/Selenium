@@ -19,5 +19,5 @@ class IWebDriver(ABC):
         pass
 
     @abstractmethod
-    def wait(self) -> WebElement:
+    def implicitly(self) -> WebElement:
         pass

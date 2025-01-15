@@ -47,11 +47,9 @@ class WebDriverFactory(IWebDriverFactory):
             self._driver.execute_script(string,value)
         else:
             raise Exception("WebDriver not created yet. call create_driver() first.")
-    # Continue for this functions of the base core
-    def webdriverwait(self):
+        
+    def implicitly(self) -> WebElement:
         if self._driver:
-            self._driver = WebDriverWait(self._driver,10).until(
-                EC.presence_of_element_located
-            )
+            return self._driver.implicitly_wait(10)
         else:
-            raise Exception("WebDriver not created yet. call create_driver() first.")
+            raise Exception("WebDriver not created yer. call created_driver() first.")

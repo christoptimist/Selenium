@@ -20,5 +20,5 @@ class IWebDriverFactory(ABC):
         pass
 
     @abstractmethod
-    def webdriverwait(self) -> WebElement:
+    def implicitly(self) -> WebElement:
         pass
