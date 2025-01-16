@@ -16,5 +16,5 @@ class WebDriverManager(IWebDriverFactory):
     def execute_script(self):
         return self._driver_factory.execute_script()
     
-    def implicitly(self):
-        return self._driver_factory.implicitly()
+    def implicitly_wait(self):
+        return self._driver_factory.implicitly_wait()

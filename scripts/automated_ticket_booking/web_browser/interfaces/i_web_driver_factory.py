@@ -20,5 +20,5 @@ class IWebDriverFactory(ABC):
         pass
 
     @abstractmethod
-    def implicitly(self) -> WebElement:
+    def implicitly_wait(self) -> WebElement:
         pass

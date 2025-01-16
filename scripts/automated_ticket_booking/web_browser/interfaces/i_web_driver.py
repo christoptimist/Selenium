@@ -17,7 +17,7 @@ class IWebDriver(ABC):
     @abstractmethod
     def execute_script(self, string: str, value: str) -> WebElement:
         pass
-
+    
     @abstractmethod
-    def implicitly(self) -> WebElement:
+    def implicitly_wait(self) -> WebElement:
         pass

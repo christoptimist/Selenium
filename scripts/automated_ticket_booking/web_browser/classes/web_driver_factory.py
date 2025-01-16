@@ -31,12 +31,21 @@ class WebDriverFactory(IWebDriverFactory):
     def find_element(self, by: str, value: str) -> WebElement:
         if self._driver:
             if by.lower() == "xpath":
-                return self._driver.find_element(By.XPATH, value)
+                target_element = WebDriverWait(self._driver,10).until(
+                    EC.presence_of_element_located((By.XPATH, value))
+                )
+                return target_element
             elif by.lower() == "id":
-                return self._driver.find_element(By.ID, value)
+                target_element = WebDriverWait(self._driver,10).until(
+                    EC.presence_of_element_located((By.ID, value))
+                )
+                return target_element
             elif by.lower() == "class_name":
-                return self._driver.find_element(By.CLASS_NAME, value)
-            # Add more locator strategies as needed
+                target_element = WebDriverWait(self._driver,10).until(
+                    EC.presence_of_element_located((By.CLASS_NAME, value))
+                )
+                return target_element
+            # Add more locator strategies as needed...
             else:
                 raise ValueError(f"Unsupported locator strategy: {by}")
         else:
@@ -48,8 +57,8 @@ class WebDriverFactory(IWebDriverFactory):
         else:
             raise Exception("WebDriver not created yet. call create_driver() first.")
         
-    def implicitly(self) -> WebElement:
+    def implicitly_wait(self) -> WebElement:
         if self._driver:
             return self._driver.implicitly_wait(10)
         else:
-            raise Exception("WebDriver not created yer. call created_driver() first.")
+            raise Exception("WebDriver not created yet. call created_driver() first.")

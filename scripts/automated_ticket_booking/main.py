@@ -19,10 +19,7 @@ api_key = 'cdae244f9fa32337cb7dae6e087b6cfa'
 target_url = 'https://google.com/recaptcha/api2/demo'
 driver.get(target_url)
 
-wait = driver.implicitly()
-
-if wait:
-    data_sitekey = driver.find_element("xpath",'//*[@id="recaptcha-demo"]').get_attribute('data-sitekey')
+data_sitekey = driver.find_element("xpath",'//*[@id="recaptcha-demo"]').get_attribute('data-sitekey')
 
 # recaptcha_factory = ReCaptchaV2Factory(api_key,target_url,data_sitekey)
 
