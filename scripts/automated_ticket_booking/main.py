@@ -1,4 +1,6 @@
 from captchas.classes.recaptcha_v2_factory import ReCaptchaV2Factory
+from web_interactions.classes.action_chains_factory import ActionChainsFactory
+from web_interactions.classes.action_chains_manager import ActionChainsManager
 from web_browser.classes.service_configuration import ServiceConfiguration
 from proxy.classes.residential_proxy import ResidentialProxy
 from web_browser.classes.stealth_configuration import StealthConfiguration
@@ -14,18 +16,15 @@ proxy = ResidentialProxy()
 driver_factory = WebDriverFactory(service_configurations,chrome_options,stealth_config,proxy)
 driver_manager = WebDriverManager(driver_factory)
 driver = driver_manager.create_driver()
+actions_factory = ActionChainsFactory(driver)
+actions_manager = ActionChainsManager(actions_factory)
+actions = actions_manager.create_action_chains()
 
 api_key = 'cdae244f9fa32337cb7dae6e087b6cfa'
-target_url = 'https://google.com/recaptcha/api2/demo'
+target_url = 'https://smtickets.com/'
 driver.get(target_url)
 
-data_sitekey = driver.find_element("xpath",'//*[@id="recaptcha-demo"]').get_attribute('data-sitekey')
-textarea_element = driver.find_element("xpath",'//*[@id="g-recaptcha-response"]')
-driver.execute_script("arguments[0].style.display = 'block'",textarea_element)
-recaptcha_factory = ReCaptchaV2Factory(api_key,target_url,data_sitekey)
-textarea_element.send_keys(recaptcha_factory.solve())
-submit_button = driver.find_element('xpath','//*[@id="recaptcha-demo-submit"]')
-submit_button.click()
+login_button = driver.find_element('xpath','//*[@id="headeraccount"]/button[2]')
 
 time.sleep(10)
 driver.quit()
