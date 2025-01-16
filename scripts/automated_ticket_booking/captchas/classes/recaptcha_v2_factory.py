@@ -9,5 +9,5 @@ class ReCaptchaV2Factory(ICaptchaSolver):
 
     def solve(self):
         solver = TwoCaptcha(self.api_key)
-        bearer_token = solver.recaptcha(self.target_url,self.site_key)
+        bearer_token = solver.recaptcha(self.site_key,self.target_url)
         return bearer_token['code']

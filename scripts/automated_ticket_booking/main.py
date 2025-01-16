@@ -20,10 +20,12 @@ target_url = 'https://google.com/recaptcha/api2/demo'
 driver.get(target_url)
 
 data_sitekey = driver.find_element("xpath",'//*[@id="recaptcha-demo"]').get_attribute('data-sitekey')
-
-# recaptcha_factory = ReCaptchaV2Factory(api_key,target_url,data_sitekey)
-
-print(f'Site_key: {data_sitekey}')
+textarea_element = driver.find_element("xpath",'//*[@id="g-recaptcha-response"]')
+driver.execute_script("arguments[0].style.display = 'block'",textarea_element)
+recaptcha_factory = ReCaptchaV2Factory(api_key,target_url,data_sitekey)
+textarea_element.send_keys(recaptcha_factory.solve())
+submit_button = driver.find_element('xpath','//*[@id="recaptcha-demo-submit"]')
+submit_button.click()
 
 time.sleep(10)
 driver.quit()

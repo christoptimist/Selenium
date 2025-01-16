@@ -30,17 +30,17 @@ class WebDriverFactory(IWebDriverFactory):
 
     def find_element(self, by: str, value: str) -> WebElement:
         if self._driver:
-            if by.lower() == "xpath":
+            if by == "xpath":
                 target_element = WebDriverWait(self._driver,10).until(
                     EC.presence_of_element_located((By.XPATH, value))
                 )
                 return target_element
-            elif by.lower() == "id":
+            elif by == "id":
                 target_element = WebDriverWait(self._driver,10).until(
                     EC.presence_of_element_located((By.ID, value))
                 )
                 return target_element
-            elif by.lower() == "class_name":
+            elif by == "class_name":
                 target_element = WebDriverWait(self._driver,10).until(
                     EC.presence_of_element_located((By.CLASS_NAME, value))
                 )
