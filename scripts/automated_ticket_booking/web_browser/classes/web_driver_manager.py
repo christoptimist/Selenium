@@ -18,3 +18,6 @@ class WebDriverManager(IWebDriverFactory):
     
     def implicitly_wait(self):
         return self._driver_factory.implicitly_wait()
+    
+    def WebDriverWait(self):
+        return self._driver_factory.WebDriverWait()

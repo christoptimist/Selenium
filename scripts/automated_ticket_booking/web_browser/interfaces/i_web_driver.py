@@ -21,3 +21,7 @@ class IWebDriver(ABC):
     @abstractmethod
     def implicitly_wait(self) -> WebElement:
         pass
+
+    @abstractmethod
+    def WebDriverWait(self, timeout: int, locator: str, target_element: str) -> WebElement:
+        pass
