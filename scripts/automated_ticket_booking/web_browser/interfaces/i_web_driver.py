@@ -23,5 +23,5 @@ class IWebDriver(ABC):
         pass
 
     @abstractmethod
-    def WebDriverWait(self, timeout: int, locator: str, target_element: str) -> WebElement:
+    def custom_wait(self, timeout: int, locator: str, target_element: str) -> WebElement:
         pass

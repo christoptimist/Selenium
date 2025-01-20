@@ -8,6 +8,7 @@ from web_browser.classes.stealth_configuration import StealthConfiguration
 from web_browser.classes.chrome_options import ChromeOptions
 from web_browser.classes.web_driver_manager import WebDriverManager
 from web_browser.classes.web_driver_factory import WebDriverFactory
+from selenium.webdriver.common.keys import Keys
 import time
 import random
 
@@ -22,10 +23,10 @@ actions_factory = ActionChainsFactory(driver)
 actions_manager = ActionChainsManager(actions_factory)
 actions = actions_manager.create_action_chains()
 
-# actions = ActionChains(driver)
 user_credentials = UserCredentials()
 api_key = 'cdae244f9fa32337cb7dae6e087b6cfa'
 target_url = 'https://smtickets.com/'
+
 driver.get(target_url)
 
 driver.implicitly_wait(10)
@@ -48,13 +49,5 @@ for char in user_credentials.password:
 login_button = driver.find_element('xpath','//*[@id="loginButton"]')
 actions.move_to_element(login_button).click().perform()
 
-"""
-    Fix this part, wherein after the bot login the account.
-    It must be wait/check for the DOM to be completed before it proceeds on the selection of categoty.
-"""
-# Currently working on the webdriverwait()
-concert_selection = driver.WebDriverWait(10,'xpath','//*[@id="quickBuySelect"]')
-
-
-time.sleep(10)
+time.sleep(15)
 driver.quit()

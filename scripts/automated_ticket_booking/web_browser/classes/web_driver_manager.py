@@ -19,5 +19,5 @@ class WebDriverManager(IWebDriverFactory):
     def implicitly_wait(self):
         return self._driver_factory.implicitly_wait()
     
-    def WebDriverWait(self):
-        return self._driver_factory.WebDriverWait()
+    def custom_wait(self, timeout: int, locator: str, target_element: str):
+        return self._driver_factory.custom_wait(timeout, locator, target_element)

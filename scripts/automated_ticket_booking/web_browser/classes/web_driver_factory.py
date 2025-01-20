@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from proxy.classes.residential_proxy import ResidentialProxy
 from web_browser.classes.service_configuration import ServiceConfiguration
 from web_browser.classes.stealth_configuration import StealthConfiguration
@@ -32,10 +33,13 @@ class WebDriverFactory(IWebDriverFactory):
     def find_element(self, by: str, value: str) -> WebElement:
         if self._driver:
             if by in ("xpath","id","class_name"):
-                target_element = WebDriverWait(self._driver,10).until(
-                    EC.presence_of_element_located((by,value))
-                )
-                return target_element
+                try:
+                    target_element = WebDriverWait(self._driver,10).until(
+                    EC.presence_of_element_located((getattr(By,by.upper(),value)))
+                    )
+                    return target_element
+                except TimeoutException:
+                    raise TimeoutException(f"Element with {by}={value} not found.")
             else:
                 raise ValueError(f"Unsupported locator strategy: {by}")
         else:
@@ -43,7 +47,10 @@ class WebDriverFactory(IWebDriverFactory):
     
     def execute_script(self, string: str, value: str) -> WebElement:
         if self._driver:
-            self._driver.execute_script(string,value)
+            try:
+                self._driver.execute_script(string,value)
+            except TimeoutException:
+                raise TimeoutException(f"javascript command: {string}={value} does not execute.")
         else:
             raise Exception("WebDriver not created yet. call create_driver() first.")
         
@@ -53,13 +60,16 @@ class WebDriverFactory(IWebDriverFactory):
         else:
             raise Exception("WebDriver not created yet. call created_driver() first.")
         
-    def WebDriverWait(self, timeout: int, locator: str, target_element: str):
+    def custom_wait(self, timeout: int, locator: str, target_element: str) -> WebElement:
         if self._driver:
             if locator in ("xpath","id","class_name"):
-                wait_element = WebDriverWait(self._driver,timeout).until(
-                    EC.presence_of_element_located((locator,target_element))
-                )
-                return wait_element
+                try:
+                    wait_element = WebDriverWait(self._driver,timeout).until(
+                        EC.presence_of_element_located((locator,target_element))
+                    )
+                    return wait_element
+                except TimeoutException:
+                    raise TimeoutException(f"Element with {locator}={target_element} not found.")
             else:
                 raise ValueError(f"Unsupported locator strategy: {locator}")
         else:
