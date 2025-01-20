@@ -14,15 +14,16 @@ class ChromeOptions:
         self.options.add_argument('--incognito')
         self.options.add_argument('--disable-webgl')
         self.options.add_argument('--disable-webrtc')
+        self.options.add_argument('--disable-peer-connection')
+        self.options.add_argument('--disable-rtc')
+        self.options.add_argument('--disable-rtc-surface')
+        self.options.add_argument('--disable-rtcdatachannel')
         self.options.add_argument("--disable-cookies") 
         self.options.add_argument(f'--window-size={random.randint(1200,1920)},{random.randint(800,1080)}')
         self.user_agent = None
 
-    def get_user_agent(self):
-        tmp = UserAgent()
-        self.user_agent = tmp.random
-        self.options.add_argument(f'--user-agent={self.user_agent}')
-        return self.options
-    
+    def set_user_agent(self, user_agent):
+        self.options.add_argument(f'--user-agent={user_agent}')
+  
     def get_options(self):
         return self.options

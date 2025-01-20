@@ -22,13 +22,16 @@ class WebDriverFactory(IWebDriverFactory):
 
     def create_driver(self) -> IWebDriver:
         # self._driver = webdriver.Chrome(service=self._service.get_service_configuration(),options=self._options.get_options(),seleniumwire_options=self._proxy.get_residential_proxy())
-        self._driver = webdriver.Chrome(service=self._service.get_service_configuration(),options=self._options.get_options())
+        self._driver = webdriver.Chrome(options=self._options.get_options())
         if self._stealth_config:
             stealth(driver=self._driver,**self._stealth_config.__dict__)
         return self._driver
         
     def quit_driver(self, driver: IWebDriver) -> None:
-        driver.quit()
+        if self._driver:
+            driver.quit()
+        else:
+            raise Exception("WebDriver not created yet. Call create_driver() first.")
 
     def find_element(self, by: str, value: str) -> WebElement:
         if self._driver:
