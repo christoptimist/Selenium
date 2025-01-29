@@ -1,7 +1,5 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from utilities.helpers import _enter_text, _click_element
 import logging
 
 class loginpage:
@@ -21,29 +19,11 @@ class loginpage:
         self.driver = driver
         self.logger = logging.getLogger(__name__)
 
-    def _enter_text(self, locator, text):
-        try:
-            element = WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located(locator)
-            )
-            element.send_keys(text)
-        except TimeoutException as e:
-            self.logger.error(f"Element not found: {e}")
-
-    def _click_element(self, locator):
-        try:
-            element = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(locator)
-            )
-            element.click()
-        except TimeoutException as e:
-            self.logger.error(f"Element not found: {e}")
-
     def enter_username(self, username):
-        self._enter_text(self.username_textbox, username)
+        _enter_text(self.driver, self.username_textbox, username, self.logger)
 
     def enter_password(self, password):
-        self._enter_text(self.password_textbox, password)
+        _enter_text(self.driver, self.password_textbox, password, self.logger)
 
     def click_login(self):
-        self._click_element(self.login_button)
+        _click_element(self.driver, self.login_button, self.logger)
