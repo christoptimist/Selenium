@@ -1,0 +1,8 @@
+behave
+selenium
+selenium-wire
+pyyaml
+requests
+webdriver-manager
+logging
+blinker
