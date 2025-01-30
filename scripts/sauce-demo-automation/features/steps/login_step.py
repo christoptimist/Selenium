@@ -4,12 +4,12 @@ from pages.login_page import loginpage
 @given('I am on the SauceDemo login page')
 def step_impl(context):
     context.login_page = loginpage(context.driver)
-    context.driver.get("https://www.saucedemo.com/v1/")
+    context.driver.get(context.config["website"]["base_url"])
 
-@when('I enter username "{username}" and password "{password}"')
-def step_impl(context, username, password):
-    context.login_page.enter_username(username)
-    context.login_page.enter_password(password)
+@when('I enter username "standard_user" and password "secret_sauce"')
+def step_impl(context):
+    context.login_page.enter_username(context.config["credentials"]["username"])
+    context.login_page.enter_password(context.config["credentials"]["password"])
 
 @when('I click the login button')
 def step_impl(context):

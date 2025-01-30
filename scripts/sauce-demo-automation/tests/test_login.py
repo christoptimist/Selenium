@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from pages.login_page import loginpage
+from utilities.config_reader import _load_config
 import random
 import logging
 
@@ -29,12 +30,13 @@ class testsaucedemologin(unittest.TestCase):
         self.driver = webdriver.Chrome(service=service, options=options)
         self.loginpage = loginpage(self.driver)
         self.driver.implicitly_wait(10)
+        self.config = _load_config()
         self.logger = logging.getLogger(__name__)
 
     def test_successful_login(self):
-        self.driver.get("https://www.saucedemo.com/v1/")
-        self.loginpage.enter_username("standard_user")
-        self.loginpage.enter_password("secret_sauce")
+        self.driver.get(self.config["website"]["base_url"])
+        self.loginpage.enter_username(self.config["credentials"]["username"])
+        self.loginpage.enter_password(self.config["credentials"]["password"])
         self.loginpage.click_login()
         self.assertIn("inventory", self.driver.current_url)
         self.logger.info("Login successful")
