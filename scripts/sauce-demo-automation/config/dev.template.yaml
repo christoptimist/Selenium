@@ -1,0 +1,6 @@
+website:
+  base_url: https://www.saucedemo.com/v1/
+
+credentials:
+  username: YOUR_USERNAME_HERE
+  password: YOUR_PASSWORD_HERE
