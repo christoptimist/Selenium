@@ -30,7 +30,7 @@ def retry_on_stale_element(max_retries=3):
     return decorator
 
 @retry_on_stale_element(max_retries=3)
-def _wait_element(driver: WebDriver, locator: tuple[By, str], logger: logging.Logger, config: Optional[Dict[str, Any]], timeouts: Optional[int] = None) -> WebElement:
+def _wait_element(driver: WebDriver, locator: tuple[By, str], logger: logging.Logger, config: Optional[Dict[str, Any]], timeouts: Optional[int] = None) -> tuple[By, str]:
     """
     Wait for an element to be visible
     """
@@ -50,17 +50,17 @@ def _wait_element(driver: WebDriver, locator: tuple[By, str], logger: logging.Lo
         raise
 
 @retry_on_stale_element(max_retries=3)
-def _enter_text_field(driver: WebDriver, locator: tuple[By, str], text: str, logger: logging.Logger, config: Optional[Dict[str, Any]], timeouts: Optional[int] = None) -> WebElement:
+def _enter_text_field(driver: WebDriver, locator: tuple[By, str], text: str, logger: logging.Logger, config: Optional[Dict[str, Any]], timeouts: Optional[int] = None) -> None:
     """
     Enter text into a text field
     """
     resolved_timeouts = (
         timeouts or (
-            config.get("timeouts", {}).get("explicit") if config else 10
+            config.get("timeouts", {}).get("explicit_wait") if config else 10
         )
     )
     try:
-        return WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, resolved_timeouts).until(
         EC.visibility_of_element_located(locator)
         ).send_keys(text)
     except TimeoutException as e:
@@ -69,17 +69,17 @@ def _enter_text_field(driver: WebDriver, locator: tuple[By, str], text: str, log
         raise
 
 @retry_on_stale_element(max_retries=3)
-def _click_button(driver: WebDriver, locator: tuple[By, str], logger: logging.Logger, config: Optional[Dict[str, Any]], timeouts: Optional[int] = None) -> WebElement:
+def _click_button(driver: WebDriver, locator: tuple[By, str], logger: logging.Logger, config: Optional[Dict[str, Any]], timeouts: Optional[int] = None) -> None:
     """
     Click a button
     """
     resolved_timeouts = (
         timeouts or (
-            config.get("timeouts", {}).get("explicit") if config else 10
+            config.get("timeouts", {}).get("explicit_wait") if config else 10
         )
     )
     try:
-       return WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, resolved_timeouts).until(
             EC.element_to_be_clickable(locator)
         ).click()
     except TimeoutException as e:
