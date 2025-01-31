@@ -6,19 +6,19 @@ import logging
 class LoginPage:
     @property
     def username_id(self) -> WebElement:
-        return _wait_element(self.driver, (By.ID, 'username'), self.logger)
+        return _wait_element(self.driver, (By.ID, 'username'), self.logger, self.config)
     
     @property
     def password_id(self) -> WebElement:
-        return _wait_element(self.driver, (By.ID, 'password'), self.logger)
+        return _wait_element(self.driver, (By.ID, 'password'), self.logger, self.config)
     
     @property
     def login_button_id(self) -> WebElement:
-        return _wait_element(self.driver, (By.CLASS_NAME, 'radius'), self.logger)
+        return _wait_element(self.driver, (By.CLASS_NAME, 'radius'), self.logger, self.config)
     
     @property
     def error_message(self) -> WebElement:
-        return _wait_element(self.driver, (By.ID, 'flash'), self.logger)
+        return _wait_element(self.driver, (By.ID, 'flash'), self.logger, self.config)
 
     def __init__(self, driver, config):
         self.driver = driver

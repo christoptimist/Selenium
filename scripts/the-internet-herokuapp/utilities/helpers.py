@@ -36,13 +36,14 @@ def _wait_element(driver: WebDriver, locator: tuple[By, str], logger: logging.Lo
     """
     resolved_timeouts = (
         timeouts or (
-            config.get("timeouts", {}).get("explicit") if config else 10
+            config.get("timeouts", {}).get("explicit_wait") if config else 10
         )
     )
     try:
-        return WebDriverWait(driver, resolved_timeouts).until(
+        WebDriverWait(driver, resolved_timeouts).until(
             EC.visibility_of_element_located(locator)
         )
+        return locator
     except TimeoutException as e:
         driver.save_screenshot("element_not_interactable.png")
         logger.error(f"Target element {locator} not interactable")
@@ -59,12 +60,9 @@ def _enter_text_field(driver: WebDriver, locator: tuple[By, str], text: str, log
         )
     )
     try:
-        element = WebDriverWait(driver, resolved_timeouts).until(
+        return WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located(locator)
-        )
-        element.clear()
-        element.send_keys(text)
-        return element
+        ).send_keys(text)
     except TimeoutException as e:
         driver.save_screenshot("text_field_not_interactable.png")
         logger.error(f"Text field {locator} not interactable")
@@ -81,11 +79,9 @@ def _click_button(driver: WebDriver, locator: tuple[By, str], logger: logging.Lo
         )
     )
     try:
-        element = WebDriverWait(driver, resolved_timeouts).until(
+       return WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable(locator)
-        )
-        element.click()
-        return element
+        ).click()
     except TimeoutException as e:
         driver.save_screenshot("button_not_interactable.png")
         logger.error(f"button element {locator} not interactable")
