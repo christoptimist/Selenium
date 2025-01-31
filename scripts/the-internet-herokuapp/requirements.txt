@@ -1,0 +1,7 @@
+selenium
+selenium-wire
+behave
+pyyaml
+unittest
+webdriver-manager
+logging
