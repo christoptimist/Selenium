@@ -3,4 +3,4 @@ selenium-wire
 pyyaml
 pytest
 webdriver-manager
-os
+behave-html-formatter
