@@ -8,3 +8,7 @@ class BasePage(ABC):
     @abstractmethod
     def _wait_element(self, driver: WebDriver, locator: tuple[By, str], logger: logging.Logger, config: Optional[Dict[str, Any]], timeouts: Optional[int] = None) -> tuple[By, str]:
         pass
+
+    @abstractmethod
+    def _enter_text_field(self, driver: WebDriver, locator: tuple[By, str], text: str, logger: logging.Logger, config: Optional[Dict[str, Any]], timeouts: Optional[int] = None) -> None:
+        pass
