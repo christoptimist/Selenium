@@ -1,0 +1,6 @@
+url:
+  base_url: https://the-internet.herokuapp.com/login
+
+timeouts:
+  explicit_wait: 10
+  implicit_wait: 5
