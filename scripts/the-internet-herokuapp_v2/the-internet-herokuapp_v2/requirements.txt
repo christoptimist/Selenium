@@ -1,6 +1,0 @@
-selenium
-selenium-wire
-pyyaml
-pytest
-webdriver-manager
-behave-html-formatter
