@@ -6,7 +6,7 @@ from utilities.helpers import _load_config
 def before_all(context):
     service = Service(executable_path=ChromeDriverManager().install())
     options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
     options.add_argument('--disable-blink-features=AutomationControlled')
     options.add_argument('--disable-gpu')
     context.driver = webdriver.Chrome(service=service, options=options)
