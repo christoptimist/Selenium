@@ -9,7 +9,7 @@ def _load_config():
     
 def _screenshot(driver, logger) -> bool:
     timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-    screenshot_path = os.path.join(os.path.dirname(__file__), '..', 'screenshot')
+    screenshot_path = os.path.join(os.path.dirname(__file__), '..', 'screenshot/')
     os.makedirs(screenshot_path, exist_ok=True)
     filepath = os.path.join(screenshot_path, f"timeouts_{timestamp}.png")
     logger.info('Performing screenshot for debugging purposes.')

@@ -1,13 +1,14 @@
 from pages.base.base_page import BasePage
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from utilities.helpers import _screenshot
-from utilities.decorators import retry_on_stale_element
+from utilities.decorators import _retry_on_stale_element
 
 class CommonActions(BasePage):
-    @retry_on_stale_element(max_retries=3)
+    @_retry_on_stale_element(max_retries=3)
     def _wait_element(self, driver, locator, logger, config, timeouts = None) -> tuple[By, str]:
         resolved_timeouts = (
             timeouts or (
@@ -24,7 +25,7 @@ class CommonActions(BasePage):
             logger.error(f"Target element is not found {locator}")
             raise
     
-    @retry_on_stale_element(max_retries=3)
+    @_retry_on_stale_element(max_retries=3)
     def _enter_text_field(self, driver, locator, text, logger, config, timeouts = None) -> None:
         resolved_timeouts = (
             timeouts or (
@@ -43,7 +44,7 @@ class CommonActions(BasePage):
             logger.error(f"Target element is not found {locator}")
             raise
 
-    @retry_on_stale_element(max_retries=3)
+    @_retry_on_stale_element(max_retries=3)
     def _click_button(self, driver, locator, logger, config, timeouts = None) -> None:
         resolve_timeouts = (
             timeouts or (

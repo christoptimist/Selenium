@@ -2,7 +2,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from functools import wraps
 import logging
 
-def retry_on_stale_element(max_retries=3):
+def _retry_on_stale_element(max_retries=3):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
