@@ -4,10 +4,11 @@ import logging
 
 def retry_on_stale_element(max_retries=3):
     def decorator(func):
+        @wraps(func)
         def wrapper(*args, **kwargs):
             logger = kwargs.get("logger", None) or args[2] if len(args) > 2 else logging.getLogger(__name__)
             """
-                Retry the function if a Stale Element Reference Exception is raised
+            Retry the function if a StaleElementReferenceException is raised
             """
             for attempt in range(max_retries):
                 try:
@@ -17,6 +18,6 @@ def retry_on_stale_element(max_retries=3):
                     if attempt == max_retries - 1:
                         logger.error("Max retries reached, raising exception")
                         raise
-                return func(*args, **kwargs)
-            return wrapper
-        return decorator
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator

@@ -7,7 +7,7 @@ from utilities.helpers import _screenshot
 from utilities.decorators import retry_on_stale_element
 
 class CommonActions(BasePage):
-
+    @retry_on_stale_element(max_retries=3)
     def _wait_element(self, driver, locator, logger, config, timeouts = None) -> tuple[By, str]:
         resolved_timeouts = (
             timeouts or (
@@ -23,7 +23,8 @@ class CommonActions(BasePage):
             _screenshot(driver, logger)
             logger.error(f"Target element is not found {locator}")
             raise
-        
+    
+    @retry_on_stale_element(max_retries=3)
     def _enter_text_field(self, driver, locator, text, logger, config, timeouts = None) -> None:
         resolved_timeouts = (
             timeouts or (
@@ -31,10 +32,28 @@ class CommonActions(BasePage):
             )
         )
         try:
-            WebDriverWait(driver, resolved_timeouts).until(
+            element = WebDriverWait(driver, resolved_timeouts).until(
                 EC.visibility_of_element_located(locator)
-            ).send_keys(text)
+            )
+
+            element.click()
+            element.send_keys(text)
         except Exception as e:
             _screenshot(driver, logger)
+            logger.error(f"Target element is not found {locator}")
+            raise
+
+    @retry_on_stale_element(max_retries=3)
+    def _click_button(self, driver, locator, logger, config, timeouts = None) -> None:
+        resolve_timeouts = (
+            timeouts or (
+                config.get("timeouts", {}).get("explicit_wait") if config else 10
+            )
+        )
+        try:
+            WebDriverWait(driver, resolve_timeouts).until(
+                EC.visibility_of_element_located(locator)
+            ).click()
+        except TimeoutException as e:
             logger.error(f"Target element is not found {locator}")
             raise

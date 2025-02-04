@@ -12,3 +12,7 @@ class BasePage(ABC):
     @abstractmethod
     def _enter_text_field(self, driver: WebDriver, locator: tuple[By, str], text: str, logger: logging.Logger, config: Optional[Dict[str, Any]], timeouts: Optional[int] = None) -> None:
         pass
+
+    @abstractmethod
+    def _click_button(self, driver: WebDriver, locator: tuple[By, str], logger: logging.Logger, config: Optional[Dict[str, Any]], timeouts: Optional[int] = None) -> None:
+        pass

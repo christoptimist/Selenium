@@ -7,6 +7,14 @@ class LoginPage(CommonActions):
     @property
     def username_id(self) -> tuple[By, str]:
         return self._wait_element(self.driver, (By.ID, 'username'), self.logging, self.config)
+    
+    @property
+    def password_id(self) -> tuple[By, str]:
+        return self._wait_element(self.driver, (By.ID, 'password'), self.logging, self.config)
+    
+    @property
+    def button_id(self) -> tuple[By, str]:
+        return self._wait_element(self.driver, (By.CLASS_NAME, 'radius', self.logging, self.config))
 
     def __init__(self, driver, config):
         self.driver = driver
@@ -16,3 +24,7 @@ class LoginPage(CommonActions):
     @retry_on_stale_element(max_retries=3)
     def enter_username(self, username) -> None:
         self._enter_text_field(self.driver, self.username_id, username, self.logging, self.config)
+
+    @retry_on_stale_element(max_retries=3)
+    def enter_password(self, password) -> None:
+        self._enter_text_field(self.driver, self.username_id, password, self.logging, self.config)
