@@ -3,22 +3,23 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from utilities.helpers import _load_config
 import pytest
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
 
-@pytest.fixture(scope="session", params=["chrome", "firefox", "edge"])
+@pytest.fixture(scope="session", params=["chrome", "edge"])
 def driver(request):
     browser_name = request.param
     if browser_name == "chrome":
         service = Service(executable_path=ChromeDriverManager().install())
         options = webdriver.ChromeOptions()
         driver = webdriver.Chrome(service=service, options=options)
-    elif browser_name == "firefox":
-        service = Service(executable_path=GeckoDriverManager().install())
-        options = webdriver.FirefoxOptions()
-        driver = webdriver.Firefox(service=service, options=options)
+    # elif browser_name == "firefox":
+    #     service = Service(executable_path=GeckoDriverManager().install())
+    #     options = webdriver.FirefoxOptions()
+    #     driver = webdriver.Firefox(service=service, options=options)
     elif browser_name == "edge":
         service = Service(executable_path=EdgeChromiumDriverManager().install())
         options = webdriver.EdgeOptions()
@@ -32,3 +33,8 @@ def driver(request):
 
     yield driver
     driver.quit()
+
+@pytest.fixture(scope="session")
+def config():
+    config = _load_config()
+    yield config
