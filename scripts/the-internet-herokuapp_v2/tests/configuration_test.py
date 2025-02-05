@@ -6,11 +6,11 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import pytest
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="chrome", help="Browser para sa test (chrome/firefox)")
+    parser.addoption("--browser", action="store", default="chrome")
 
-@pytest.fixture(scope=function)
-def browser(request):
-    browser_name = request.config.getoption("--browser")
+@pytest.fixture(scope="function", params=["chrome", "firefox", "edge"])
+def driver(request):
+    browser_name = request.param
 
     if browser_name == "chrome":
         service = Service(executable_path=ChromeDriverManager().install())

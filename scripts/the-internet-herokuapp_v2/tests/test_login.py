@@ -1,18 +1,20 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from utilities.helpers import _load_config
+from pages.web.login_page import LoginPage
 import pytest
 
-@pytest.fixture()
-def driver():
-    service = Service(executable_path=ChromeDriverManager().install())
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    options.add_argument('--disable-gpu')
-    options.add_argument('--disable-blink-features=AutomationControlled')
-    driver = webdriver.Chrome(service=service, options=options)
-    yield driver
-    driver.quit()
-
+@pytest.mark.parametrize(
+        "username, password, expected_results",
+        [
+            ("tomsmith","SuperSecretPassword!", True),
+            ("tomsmith","WrongPassword", False),
+            ("wrongusername","SuperSecretPassword!", False),
+            ("","", False),
+            ("user456","password456", False),
+        ]
+)
 def test_login(driver):
+    login_page = LoginPage(driver)
     driver.get('https://the-internet.herokuapp.com/login')
