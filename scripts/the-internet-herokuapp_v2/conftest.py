@@ -3,7 +3,6 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from utilities.helpers import _load_config
 import pytest
 
 def pytest_addoption(parser):
@@ -12,7 +11,6 @@ def pytest_addoption(parser):
 @pytest.fixture(scope="session", params=["chrome", "firefox", "edge"])
 def driver(request):
     browser_name = request.param
-    config = _load_config()
     if browser_name == "chrome":
         service = Service(executable_path=ChromeDriverManager().install())
         options = webdriver.ChromeOptions()
@@ -32,5 +30,5 @@ def driver(request):
     options.add_argument('--disable-blink-features=AutomationControlled')
     options.add_argument('--disable-gpu')
 
-    yield driver, config
+    yield driver
     driver.quit()
